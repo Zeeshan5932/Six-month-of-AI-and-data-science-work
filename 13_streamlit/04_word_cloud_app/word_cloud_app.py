@@ -44,7 +44,7 @@ st.title("Word Cloud Generator")
 st.subheader("📁 Upload a pdf, docx or text file to generate a word cloud")
 
 uploaded_file = st.file_uploader("Choose a file", type=["txt", "pdf", "docx"])
-st.set_option('deprecation.showPyplotGlobalUse', False)
+# Removed deprecated st.set_option('deprecation.showPyplotGlobalUse', False)
 
 if uploaded_file:
     file_details = {"FileName": uploaded_file.name, "FileType": uploaded_file.type, "FileSize": uploaded_file.size}
@@ -97,6 +97,8 @@ if uploaded_file:
         words = text.split()
         word_count = pd.DataFrame({'Word': words}).groupby('Word').size().reset_index(name='Count').sort_values('Count', ascending=False)
         st.write(word_count)
+    
+    # Use st.pyplot() with the figure object explicitly
     st.pyplot(fig)
     if st.button(f"Save as {format_}"):
         buffered = BytesIO()
@@ -104,15 +106,7 @@ if uploaded_file:
         st.markdown(get_image_download_link(buffered, format_), unsafe_allow_html=True)
     
     
-    # Word count table at the end
-    st.sidebar.markdown("---")
-    st.sidebar.subheader("Subscribe to our Youtube Channel to learn Data Science in Urdu/Hindi")
-    # add a youtube video
-    st.sidebar.video("https://youtu.be/omk5b1m2h38")
-    st.sidebar.markdown("---")
-    # add author name and info
-    st.sidebar.markdown("Created by: [Dr. Muhammad Aammar Tufail](https://github.com/AammarTufail)")
-    st.sidebar.markdown("Contact: [Email](mailto:aammar@codanics.com)")
+   
 
 
     
